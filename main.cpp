@@ -1,11 +1,3 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -15,8 +7,12 @@ using namespace std;
 //declare functions
 void countLetter();
 void convertPhonetic();
+
 void factorial();
+int factHelper(int n, int r);
+
 void enhancedFactorial();
+int factHelperEnhanced(int n, int r);
 
 
 int main()
@@ -24,7 +20,7 @@ int main()
     countLetter();
     convertPhonetic();
     factorial();
- //   enhancedFactorial();
+    enhancedFactorial();
     
     return 0;
 }
@@ -42,8 +38,10 @@ void countLetter(){
     
     cout << "Please enter a letter: ";
     letter = getchar();
-    cin.ignore();
-    
+    cin.ignore(); // or use getchar() to remove the "\n"
+
+
+
     for(int i = 0; i < sentence.length(); i++){
         if(sentence[i] == letter){
             count++;
@@ -182,20 +180,46 @@ void factorial(){
     int number,result = 1;
     cout << "Please enter a number: ";
     cin >> number;
-// TODO
 
+    result = factHelper(number,result);
 
+    cout << "The factorial of " << number << " is " << result << endl;
+}
+int factHelper(int n, int r){
+    if (n == 0) return r;
+    return factHelper(n-1, n*r);
+}
+// if n = 4, fact(4,1) -> fact(3,4*1) -> fact(2,3*4*1) 
+//           -> fact(1, 2*3*4*1) -> fact(0,1*2*3*4*1) -> return 1*2*3*4*1
 
-    cout << "The factorial of " << number << " is " << result;
+// question 5
+void enhancedFactorial(){
+
+    // an array stores the values for the first 6 factorials
+    int calculatedFac[6] = {1,2,6,24,120,720};
+    
+    int number,result = 1;
+    cout << "Please enter a number: ";
+    cin >> number;
+
+    // if the input number is the one of the first six
+    if(number >= 1 && number <= 6){
+    cout << "The factorial of " << number << " is " << calculatedFac[number] << endl;
+    }
+    // when input > 6
+    else{
+
+    result = factHelperEnhanced(number,calculatedFac[5]);
+    cout << "The factorial of " << number << " is " << result << endl;
+    // fact(7,720 = 6!) -> fact(6,7*6!) -> n==6 return 7*6!
+    }
 }
 
 
-
-
-
-
-
-
+int factHelperEnhanced(int n, int r){
+    if (n == 6) return r;
+    return factHelperEnhanced(n-1, n*r);
+}
 
 
 
