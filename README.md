@@ -1,3 +1,3 @@
 # COMP-322
 
-COMP 322 Assignment 1
+COMP 322 Introduction to C++
