@@ -1,3 +1,3 @@
 # COMP-322
 
-COMP 322 Introduction to C++
+Winter 2019 COMP-322 Introduction to C++
