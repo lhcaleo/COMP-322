@@ -1,1 +1,1 @@
-Finished A2
+Finished Assignment 2 
