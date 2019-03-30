@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception>
 using namespace std;
 int main()
 {
@@ -55,6 +56,7 @@ int main()
     // add the needed code that shows how you use your class to create an array of multiple elements of a certain type.
     // provide all the necessary test code that shows the different use cases of your code
 }
+
 //implements generic programming
 template <typename T>
 class SmartPointer
@@ -74,15 +76,15 @@ class SmartPointer
 template <typename T>
 SmartPointer<T>::SmartPointer()
 {
-    this->value = new T(0);
+    this->value = new T(0.00);
 }
 // constructor with parameters
 template <typename T>
 SmartPointer<T>::SmartPointer(T value)
 {
-    this->value = new T(value);
+    this->setValue(value);
 }
-// destructor 
+// destructor
 template <typename T>
 SmartPointer<T>::SmartPointer()
 {
@@ -98,5 +100,23 @@ T SmartPointer<T>::getValue()
 template <typename T>
 void SmartPointer<T>::setValue(T value)
 {
-    *this->value = new T(value);
+    try
+    {
+        this->value = new T(value);
+    }
+    catch (const std::bad_alloc &e)
+    {
+        cout << "the variable was not being allocated" << e.what() << endl;
+    }
+    try
+    {
+        if (value <= 0)
+        {
+            throw "Negative Number Exception";
+        }
+    }
+    catch (const char *message)
+    {
+        cerr << message << endl;
+    }
 }
