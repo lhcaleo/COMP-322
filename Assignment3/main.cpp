@@ -65,6 +65,7 @@ class SmartPointer
   public:
     SmartPointer();
     SmartPointer(T value);
+    ~SmartPointer();
     T getValue();
     void setValue(T value);
 };
@@ -80,6 +81,12 @@ template <typename T>
 SmartPointer<T>::SmartPointer(T value)
 {
     this->value = new T(value);
+}
+// destructor 
+template <typename T>
+SmartPointer<T>::SmartPointer()
+{
+    delete this->value;
 }
 // get value method
 template <typename T>
