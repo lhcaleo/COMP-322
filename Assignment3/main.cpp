@@ -2,6 +2,36 @@
 #include <exception>
 using namespace std;
 
+
+/* 
+-Question 1: 
+Research smart pointers provided by the standard library (since C++11). 
+List them and explain the difference between them. 
+
+-Answer:
+In order to manage dynamic memory safely, smart pointers are used to make sure
+  that the object is deleted if it will not be used in the future.
+According to cppreference.com, "Smart pointers enable automatic, exception-safe, object lifetime management."
+"
+Smart pointers provided by the standard library (since C++11):
+(1)unique_ptr
+    Ensure that only exactly one copy of an object exists. 
+    i.e. Unique object ownership
+(1)shared_ptr
+    Enable many shared pointers can own the same object
+    i.e. Shared object ownership
+    It can avoid memory leak 
+(3)weak_ptr
+    weak pointer holds a "weak' reference to an object held by shared_ptr
+    It can be converted to shared_ptr easily in order to have the acess to the object
+    i.e. Temporary object ownership
+(4)auto_ptr
+    Manages one object created by new keyword and deletes this object when
+      auto_ptr is destroyed. It may cause problems regarding its deletion.
+    i.e. Strict object ownership
+*/
+
+
 // Smart Pointer
 template <typename T>
 class SmartPointer
@@ -37,7 +67,7 @@ class SmartPointer
         {
             cerr << message << endl;
         }
-        SmartPointer<T>* sp3 = new SmartPointer<T>(new T[sp1.size], sp1.size);
+        SmartPointer<T> *sp3 = new SmartPointer<T>(new T[sp1.size], sp1.size);
         for (int i = 0; i < sp1.size; i++)
         {
             sp3->setValue(*(sp1.value + i) + *(sp2.value + i), i);
@@ -57,7 +87,7 @@ class SmartPointer
         {
             cerr << message << endl;
         }
-        SmartPointer<T>* sp3 = new SmartPointer<T>(new T[sp1.size], sp1.size);
+        SmartPointer<T> *sp3 = new SmartPointer<T>(new T[sp1.size], sp1.size);
         for (int i = 0; i < sp1.size; i++)
         {
             sp3->setValue(*(sp1.value + i) - *(sp2.value + i), i);
@@ -77,7 +107,7 @@ class SmartPointer
         {
             cerr << message << endl;
         }
-        SmartPointer<T>* sp3 = new SmartPointer<T>(new T[sp1.size], sp1.size);
+        SmartPointer<T> *sp3 = new SmartPointer<T>(new T[sp1.size], sp1.size);
         for (int i = 0; i < sp1.size; i++)
         {
             sp3->setValue(*(sp1.value + i) * *(sp2.value + i), i);
@@ -206,7 +236,7 @@ void SmartPointer<T>::setValue(T value, int i)
 template <typename T>
 void SmartPointer<T>::getArray()
 {
-    for(int i = 0; i < this->size; i++)
+    for (int i = 0; i < this->size; i++)
     {
         cout << *(this->value + i) << " ";
     }
@@ -217,7 +247,8 @@ int main()
 {
 
     // For SmartPointer class
-    cout << "\n----Testing SmartPointer class----\n" << endl;
+    cout << "\n----Testing SmartPointer class----\n"
+         << endl;
 
     // Testing Constructors
     cout << "Creating a SmartPointer of type int with value 11" << endl;
@@ -252,7 +283,6 @@ int main()
     SmartFloatPointer2.setValue(2.5);
     cout << "SmartFloatPointer2 = " << SmartFloatPointer2.getValue() << endl;
 
-
     SmartPointer<float> SmartFloatPointer3 = SmartFloatPointer1 + SmartFloatPointer2;
     cout << "\nSmartFloatPointer1 + SmartFloatPointer2 = " << SmartFloatPointer3.getValue() << endl;
 
@@ -271,40 +301,40 @@ int main()
     // For SmartPointer class
 
     // Testing Constructors
-    int testArray_1[3]= {1,2,3};
+    int testArray_1[3] = {1, 2, 3};
     cout << "\nCreating a SmartArray of type int with value 1,2,3" << endl;
     SmartPointer<int> SmartIntPointer11(testArray_1, 3);
     cout << "SmartIntArray11 = ";
     SmartIntPointer11.getArray();
 
-    int testArray_2[3]= {-1,-2,-3};
+    int testArray_2[3] = {-1, -2, -3};
     cout << "\nCreating a SmartArray of type int with value -1,-2,-3" << endl;
-    SmartPointer<int> SmartIntPointer22(testArray_2,3);
+    SmartPointer<int> SmartIntPointer22(testArray_2, 3);
 
     // Testing Setter & Getter
     cout << "\nSetting value of SmartIntArray11 to 11,22,33" << endl;
-    SmartIntPointer11.setValue(11,0);
-    SmartIntPointer11.setValue(22,1);
-    SmartIntPointer11.setValue(33,2);
+    SmartIntPointer11.setValue(11, 0);
+    SmartIntPointer11.setValue(22, 1);
+    SmartIntPointer11.setValue(33, 2);
     cout << "SmartIntArray11 = ";
     SmartIntPointer11.getArray();
 
-    float testArray_3[3]= {1.5,2.5,3.5};
+    float testArray_3[3] = {1.5, 2.5, 3.5};
     cout << "\nCreating a SmartArray of type float with value 1.5,2.5,3.5" << endl;
-    SmartPointer<float> SmartFloatPointer33(testArray_3,3);
+    SmartPointer<float> SmartFloatPointer33(testArray_3, 3);
     cout << "SmartFloatArray33 = ";
     SmartFloatPointer33.getArray();
 
     cout << "\nSetting value of SmartFloatArray33 to 0.5,1.5,2.5" << endl;
-    SmartFloatPointer33.setValue(0.5,0);
-    SmartFloatPointer33.setValue(1.5,1);
-    SmartFloatPointer33.setValue(2.5,2);
+    SmartFloatPointer33.setValue(0.5, 0);
+    SmartFloatPointer33.setValue(1.5, 1);
+    SmartFloatPointer33.setValue(2.5, 2);
     cout << "SmartFloatArray33 = ";
     SmartFloatPointer33.getArray();
 
-    float testArray_4[3]= {0.5,2.1,4.0};
+    float testArray_4[3] = {0.5, 2.1, 4.0};
     cout << "\nCreating a SmartArray of type float with value 0.5,2.1,4.0" << endl;
-    SmartPointer<float> SmartFloatPointer44(testArray_4,3);
+    SmartPointer<float> SmartFloatPointer44(testArray_4, 3);
     cout << "SmartFloatArray44 = ";
     SmartFloatPointer44.getArray();
 
@@ -320,15 +350,15 @@ int main()
     cout << "\nSmartFloatArray33 * SmartFloatArray44 = ";
     SmartFloatPointer77.getArray();
 
-    cout << "\n--Test operation with different array size--\n" << endl;
-    float testArray_5[2]= {1.5,1.5};
+    cout << "\n--Test operation with different array size--\n"
+         << endl;
+    float testArray_5[2] = {1.5, 1.5};
     cout << "Creating a SmartArray of type float with value 1.5,1.5" << endl;
-    SmartPointer<float> SmartFloatPointer88(testArray_5,2);
+    SmartPointer<float> SmartFloatPointer88(testArray_5, 2);
     cout << "SmartFloatArray88 = ";
     SmartFloatPointer88.getArray();
 
     cout << "\nSmartFloatArray33 + SmartFloatArray88 = \n";
     SmartPointer<float> SmartFloatPointer99 = SmartFloatPointer33 + SmartFloatPointer88;
     cout << "\n";
-
 }
